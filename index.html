@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NutriTrack — nutrizione e progressi, insieme</title>
+    <meta
+      name="description"
+      content="Una piattaforma semplice per registrare misure e progressi e condividerli con la propria nutrizionista."
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="NutriTrack, pagina iniziale">
+          <span class="brand-mark" aria-hidden="true">N</span>
+          Nutri<span class="brand-accent">Track</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navigazione principale">
+          <a class="nav-link" href="#features">Funzionalità</a>
+          <div class="nav-actions" data-auth="guest">
+            <a class="link-button" href="login.html">Accedi</a>
+            <a class="btn btn-primary btn-small" href="register.html">Inizia ora</a>
+          </div>
+          <div class="nav-actions" data-auth="user" hidden>
+            <a class="link-button" href="dashboard.html">Dashboard</a>
+            <button class="btn btn-ghost btn-small" type="button" data-action="logout">
+              Esci
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="container">
+        <div id="config-notice" class="alert alert-warning" role="status" hidden></div>
+      </div>
+
+      <section class="hero container">
+        <div class="hero-copy">
+          <p class="eyebrow">Nutrizione, senza rumore</p>
+          <h1>Piccoli passi. Progressi reali. Insieme.</h1>
+          <p class="hero-text">
+            NutriTrack raccoglie le tue misure e il tuo percorso in un unico spazio
+            riservato, condiviso solo con la tua nutrizionista.
+          </p>
+          <div class="hero-actions" data-auth="guest">
+            <a class="btn btn-primary" href="register.html">Crea il tuo account</a>
+            <a class="btn btn-secondary" href="login.html">Ho già un account</a>
+          </div>
+          <div class="hero-actions" data-auth="user" hidden>
+            <a class="btn btn-primary" href="dashboard.html">Vai alla dashboard</a>
+          </div>
+          <p class="hero-note">
+            I dati personali restano privati per impostazione predefinita. Le misure
+            sono visibili solo a te e alla nutrizionista.
+          </p>
+        </div>
+
+        <div class="hero-card" aria-hidden="true">
+          <div class="mock-card">
+            <span class="pill pill-green">Questa settimana</span>
+            <h2>Costanza, non perfezione</h2>
+            <div class="progress-block">
+              <div class="progress-label">
+                <span>Percorso iniziato</span>
+                <strong>4 settimane</strong>
+              </div>
+              <div class="progress-track"><span style="width: 66%"></span></div>
+            </div>
+            <div class="mock-row">
+              <span class="dot"></span>
+              <div>
+                <strong>Ultima misurazione</strong>
+                <span>Peso e circonferenze aggiornati</span>
+              </div>
+            </div>
+            <div class="mock-row">
+              <span class="dot dot-muted"></span>
+              <div>
+                <strong>Prossimo controllo</strong>
+                <span>Giovedì, 10:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="section container">
+        <div class="section-heading">
+          <p class="eyebrow">Pensata per durare</p>
+          <h2>Tutto ciò che serve per seguire il percorso</h2>
+          <p>
+            Uno strumento essenziale per paziente e nutrizionista — senza grafici
+            confusi e senza giudizi.
+          </p>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <span class="card-icon" aria-hidden="true">01</span>
+            <h3>Misure e progressi</h3>
+            <p>
+              Registra peso, altezza e circonferenze. Lo storico mostra l'andamento
+              nel tempo, non un singolo numero.
+            </p>
+          </article>
+          <article class="card">
+            <span class="card-icon" aria-hidden="true">02</span>
+            <h3>Uno sguardo condiviso</h3>
+            <p>
+              La nutrizionista vede le tue rilevazioni e la data di inizio dieta,
+              così può seguirti anche tra un controllo e l'altro.
+            </p>
+          </article>
+          <article class="card">
+            <span class="card-icon" aria-hidden="true">03</span>
+            <h3>Privacy concreta</h3>
+            <p>
+              I tuoi dati sanitari sono protetti da regole di accesso nel database,
+              non solo da pulsanti nascosti.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="split">
+          <div>
+            <p class="eyebrow">Come funziona</p>
+            <h2>Tre semplici passi</h2>
+            <p>
+              Inizia con un account sicuro. Le informazioni personali sono protette da
+              Row Level Security e accessibili solo alle persone autorizzate.
+            </p>
+          </div>
+          <ol class="steps">
+            <li>
+              <span class="step-number">1</span>
+              <div>
+                <strong>Crea il tuo account</strong>
+                <p>Registrati con la tua email e confermala per attivare l'accesso.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">2</span>
+              <div>
+                <strong>Registra le tue misure</strong>
+                <p>
+                  Inserisci peso, altezza e circonferenze. Ogni rilevazione resta nello
+                  storico del tuo percorso.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">3</span>
+              <div>
+                <strong>Condividi con la nutrizionista</strong>
+                <p>
+                  La professionista può controllare il grafico del peso, lo storico e
+                  la data di inizio dieta.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="cta container">
+        <div class="cta-inner">
+          <div>
+            <h2>Pronto a iniziare?</h2>
+            <p>Crea un account e registra la prima misurazione oggi.</p>
+          </div>
+          <div class="hero-actions" data-auth="guest">
+            <a class="btn btn-light" href="register.html">Crea il tuo account</a>
+            <a class="btn btn-outline-light" href="login.html">Accedi</a>
+          </div>
+          <div class="hero-actions" data-auth="user" hidden>
+            <a class="btn btn-light" href="dashboard.html">Apri la dashboard</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>NutriTrack — progetto didattico realizzato con HTML, CSS, JavaScript e Supabase.</p>
+        <p class="footer-muted">Nessun dato di salute è pubblico senza consenso esplicito.</p>
+      </div>
+    </footer>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"
+    ></script>
+    <script defer src="js/config.js"></script>
+    <script defer src="js/main.js"></script>
+  </body>
+</html>

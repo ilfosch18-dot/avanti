@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pazienti — NutriTrack</title>
+    <meta
+      name="description"
+      content="Area professionale NutriTrack: pazienti, misure e andamento del percorso."
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="NutriTrack, pagina iniziale">
+          <span class="brand-mark" aria-hidden="true">N</span>
+          Nutri<span class="brand-accent">Track</span>
+        </a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+          <a class="nav-link" href="index.html">Home</a>
+          <div class="nav-actions" data-auth="user" hidden>
+            <span class="nav-user" data-user-name></span>
+            <button class="btn btn-ghost btn-small" type="button" data-action="logout">
+              Esci
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="dashboard-main">
+      <div class="container">
+        <div id="config-notice" class="alert alert-warning" role="status" hidden></div>
+
+        <div id="nutritionist-loading" class="state-card" role="status" aria-live="polite">
+          <span class="spinner" aria-hidden="true"></span>
+          <p>Caricamento dei pazienti…</p>
+        </div>
+
+        <div id="nutritionist-error" class="state-card state-error" role="alert" hidden>
+          <h1>Non riusciamo a caricare l'area professionale</h1>
+          <p id="nutritionist-error-text"></p>
+          <div class="state-actions">
+            <button id="nutritionist-retry" class="btn btn-primary" type="button">
+              Riprova
+            </button>
+            <a class="btn btn-secondary" href="login.html">Torna al login</a>
+          </div>
+        </div>
+
+        <div id="nutritionist-content" hidden>
+          <div class="dashboard-heading">
+            <div>
+              <p class="eyebrow">Area professionale</p>
+              <h1>I tuoi pazienti</h1>
+              <p class="muted">
+                Controlla misure, andamento del peso e data di inizio dieta di ogni paziente.
+              </p>
+            </div>
+            <span class="pill pill-green">Nutrizionista</span>
+          </div>
+
+          <div class="patient-layout">
+            <aside class="card patient-list-card" aria-labelledby="patients-title">
+              <div class="card-heading">
+                <div>
+                  <h2 id="patients-title">Pazienti</h2>
+                  <p class="muted card-subtitle">Tutti i clienti registrati.</p>
+                </div>
+                <span id="patient-count" class="pill">0</span>
+              </div>
+
+              <button id="refresh-patients" class="btn btn-ghost btn-small btn-block" type="button">
+                Aggiorna elenco
+              </button>
+
+              <div id="patient-list" class="patient-list" role="list"></div>
+
+              <p id="patient-list-empty" class="empty-state" hidden>
+                Nessun paziente registrato. Quando un cliente crea un account comparirà qui.
+              </p>
+            </aside>
+
+            <section class="patient-detail" aria-live="polite">
+              <div id="patient-empty" class="card empty-state">
+                Seleziona un paziente dall'elenco per vedere i suoi progressi.
+              </div>
+
+              <div id="patient-detail-content" hidden>
+                <section class="card" aria-labelledby="patient-profile-title">
+                  <div class="card-heading">
+                    <div>
+                      <h2 id="patient-profile-title">Scheda paziente</h2>
+                      <p class="muted card-subtitle">Dati di contatto e inizio del percorso.</p>
+                    </div>
+                    <span class="pill">Paziente</span>
+                  </div>
+
+                  <h3 id="patient-name" class="patient-name">—</h3>
+
+                  <dl class="detail-list">
+                    <div>
+                      <dt>Email di accesso</dt>
+                      <dd id="patient-email">—</dd>
+                    </div>
+                    <div>
+                      <dt>Telefono</dt>
+                      <dd id="patient-phone">—</dd>
+                    </div>
+                    <div>
+                      <dt>Altezza</dt>
+                      <dd id="patient-height">—</dd>
+                    </div>
+                    <div>
+                      <dt>Paziente dal</dt>
+                      <dd id="patient-member-since">—</dd>
+                    </div>
+                  </dl>
+
+                  <div id="diet-message" class="alert" role="alert" aria-live="polite" hidden></div>
+
+                  <form id="diet-form" class="inline-form" novalidate>
+                    <div class="field">
+                      <label for="diet-date">Data di inizio dieta</label>
+                      <input id="diet-date" name="dietDate" type="date" required />
+                      <span class="field-hint">Puoi aggiornarla in qualsiasi momento.</span>
+                    </div>
+                    <button id="diet-save" class="btn btn-primary" type="submit">
+                      Salva data
+                    </button>
+                  </form>
+                </section>
+
+                <section class="summary-grid" aria-label="Riepilogo del paziente">
+                  <article class="card stat-card">
+                    <span class="stat-label">Giorni di dieta</span>
+                    <strong id="patient-summary-days" class="stat-value">—</strong>
+                    <p>Dalla data di inizio impostata.</p>
+                  </article>
+                  <article class="card stat-card">
+                    <span class="stat-label">Peso attuale</span>
+                    <strong id="patient-summary-current-weight" class="stat-value">—</strong>
+                    <p>Ultima misurazione registrata.</p>
+                  </article>
+                  <article class="card stat-card">
+                    <span class="stat-label">Variazione peso</span>
+                    <strong id="patient-summary-weight-change" class="stat-value">—</strong>
+                    <p>Tra prima e ultima rilevazione.</p>
+                  </article>
+                  <article class="card stat-card">
+                    <span class="stat-label">Misurazioni</span>
+                    <strong id="patient-summary-count" class="stat-value">—</strong>
+                    <p>Rilevazioni presenti nello storico.</p>
+                  </article>
+                </section>
+
+                <section class="card" aria-labelledby="patient-chart-title">
+                  <div class="card-heading">
+                    <h2 id="patient-chart-title">Andamento del peso</h2>
+                    <span class="pill pill-green">Progresso</span>
+                  </div>
+                  <div id="patient-chart" class="chart-container"></div>
+                </section>
+
+                <section class="card" aria-labelledby="patient-history-title">
+                  <div class="card-heading">
+                    <h2 id="patient-history-title">Storico misurazioni</h2>
+                    <span class="pill">Sola lettura</span>
+                  </div>
+
+                  <div id="patient-measurements-loading" class="inline-loading" role="status" hidden>
+                    <span class="spinner spinner-small" aria-hidden="true"></span>
+                    Aggiornamento dello storico…
+                  </div>
+
+                  <div id="patient-data-message" class="alert" role="alert" aria-live="polite" hidden></div>
+
+                  <div id="patient-measurements-table-wrap" class="table-wrap">
+                    <table class="data-table">
+                      <caption class="visually-hidden">
+                        Storico delle misurazioni del paziente selezionato.
+                      </caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">Data</th>
+                          <th scope="col">Peso</th>
+                          <th scope="col">Vita</th>
+                          <th scope="col">Fianchi</th>
+                          <th scope="col">Torace</th>
+                          <th scope="col">Braccio</th>
+                          <th scope="col">Coscia</th>
+                          <th scope="col">Collo</th>
+                          <th scope="col">Note</th>
+                        </tr>
+                      </thead>
+                      <tbody id="patient-measurements-body"></tbody>
+                    </table>
+                  </div>
+
+                  <p id="patient-measurements-empty" class="empty-state" hidden>
+                    Questo paziente non ha ancora registrato misurazioni.
+                  </p>
+                </section>
+              </div>
+            </section>
+          </div>
+
+          <section class="card note-card" aria-labelledby="nutritionist-privacy-title">
+            <h2 id="nutritionist-privacy-title">Accesso ai dati</h2>
+            <p>
+              Questa area è riservata agli account con ruolo nutrizionista. Le policy
+              del database consentono di leggere i profili dei pazienti e le loro
+              misurazioni, ma non di modificarle o eliminarle. L'unica modifica
+              consentita è la data di inizio dieta.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>NutriTrack — progetto didattico realizzato con HTML, CSS, JavaScript e Supabase.</p>
+      </div>
+    </footer>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"
+    ></script>
+    <script defer src="js/config.js"></script>
+    <script defer src="js/main.js"></script>
+    <script defer src="js/nutritionist.js"></script>
+  </body>
+</html>

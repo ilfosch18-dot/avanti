@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard — NutriTrack</title>
+    <meta name="description" content="La tua dashboard privata NutriTrack." />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="NutriTrack, pagina iniziale">
+          <span class="brand-mark" aria-hidden="true">N</span>
+          Nutri<span class="brand-accent">Track</span>
+        </a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+          <a class="nav-link" href="index.html">Home</a>
+          <div class="nav-actions" data-auth="user" hidden>
+            <span class="nav-user" data-user-name></span>
+            <button class="btn btn-ghost btn-small" type="button" data-action="logout">
+              Esci
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="dashboard-main">
+      <div class="container">
+        <div id="config-notice" class="alert alert-warning" role="status" hidden></div>
+
+        <div id="dashboard-loading" class="state-card" role="status" aria-live="polite">
+          <span class="spinner" aria-hidden="true"></span>
+          <p>Caricamento della dashboard…</p>
+        </div>
+
+        <div id="dashboard-error" class="state-card state-error" role="alert" hidden>
+          <h1>Non riusciamo a caricare la dashboard</h1>
+          <p id="dashboard-error-text"></p>
+          <div class="state-actions">
+            <button id="dashboard-retry" class="btn btn-primary" type="button">
+              Riprova
+            </button>
+            <a class="btn btn-secondary" href="login.html">Torna al login</a>
+          </div>
+        </div>
+
+        <div id="dashboard-content" hidden>
+          <div class="dashboard-heading">
+            <div>
+              <p class="eyebrow">Il tuo spazio privato</p>
+              <h1 id="welcome-heading">Bentornato</h1>
+              <p id="welcome-subtitle" class="muted"></p>
+            </div>
+            <span id="role-badge" class="pill pill-green">Paziente</span>
+          </div>
+
+          <section class="summary-grid" aria-label="Riepilogo del percorso">
+            <article class="card stat-card">
+              <span class="stat-label">Giorni di dieta</span>
+              <strong id="summary-days" class="stat-value">—</strong>
+              <p>Calcolati dalla data impostata dalla nutrizionista.</p>
+            </article>
+            <article class="card stat-card">
+              <span class="stat-label">Peso attuale</span>
+              <strong id="summary-current-weight" class="stat-value">—</strong>
+              <p>Ultima misurazione registrata.</p>
+            </article>
+            <article class="card stat-card">
+              <span class="stat-label">Variazione peso</span>
+              <strong id="summary-weight-change" class="stat-value">—</strong>
+              <p>Differenza tra la prima e l'ultima rilevazione.</p>
+            </article>
+            <article class="card stat-card">
+              <span class="stat-label">Misurazioni</span>
+              <strong id="summary-count" class="stat-value">—</strong>
+              <p>Rilevazioni salvate nel tuo storico.</p>
+            </article>
+          </section>
+
+          <div class="dashboard-grid">
+            <section class="card" aria-labelledby="profile-title">
+              <div class="card-heading">
+                <h2 id="profile-title">I tuoi dati</h2>
+                <span class="pill">Privato</span>
+              </div>
+
+              <div id="profile-message" class="alert" role="alert" aria-live="polite" hidden></div>
+
+              <form id="profile-form" class="form" novalidate>
+                <div class="field">
+                  <label for="profile-name">Nome</label>
+                  <input id="profile-name" type="text" readonly />
+                </div>
+
+                <div class="field">
+                  <label for="profile-email">Email di accesso</label>
+                  <input id="profile-email" type="email" readonly />
+                  <span class="field-hint">Per cambiarla servirà il flusso di conferma di Supabase.</span>
+                </div>
+
+                <div class="field">
+                  <label for="profile-phone">Telefono</label>
+                  <input
+                    id="profile-phone"
+                    name="phone"
+                    type="tel"
+                    autocomplete="tel"
+                    maxlength="30"
+                    placeholder="+39 333 1234567"
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="profile-height">Altezza (cm)</label>
+                  <input
+                    id="profile-height"
+                    name="height"
+                    type="number"
+                    inputmode="decimal"
+                    min="50"
+                    max="250"
+                    step="0.1"
+                    placeholder="Es. 170"
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="diet-start-date">Inizio dieta</label>
+                  <input id="diet-start-date" type="text" readonly />
+                  <span class="field-hint">La data è impostata dalla nutrizionista.</span>
+                </div>
+
+                <button id="profile-save" class="btn btn-secondary btn-block" type="submit">
+                  Salva i miei dati
+                </button>
+              </form>
+            </section>
+
+            <section class="card" aria-labelledby="chart-title">
+              <div class="card-heading">
+                <h2 id="chart-title">Andamento del peso</h2>
+                <span class="pill pill-green">Progresso</span>
+              </div>
+              <div id="weight-chart" class="chart-container"></div>
+            </section>
+          </div>
+
+          <section class="card section-tight" aria-labelledby="measurement-title">
+            <div class="card-heading">
+              <div>
+                <h2 id="measurement-title">Nuova misurazione</h2>
+                <p class="muted card-subtitle">
+                  Registra peso e circonferenze. Il peso è obbligatorio, gli altri campi sono facoltativi.
+                </p>
+              </div>
+              <span class="pill">Solo tu</span>
+            </div>
+
+            <div id="measurement-message" class="alert" role="alert" aria-live="polite" hidden></div>
+
+            <form id="measurement-form" class="form" novalidate>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="measured-on">Data della misurazione</label>
+                  <input id="measured-on" name="measuredOn" type="date" required />
+                </div>
+
+                <div class="field">
+                  <label for="weight-kg">Peso (kg)</label>
+                  <input
+                    id="weight-kg"
+                    name="weight"
+                    type="number"
+                    inputmode="decimal"
+                    min="20"
+                    max="400"
+                    step="0.1"
+                    placeholder="Es. 68,5"
+                    required
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="waist-cm">Vita (cm)</label>
+                  <input id="waist-cm" name="waist" type="number" inputmode="decimal" min="20" max="250" step="0.1" />
+                </div>
+
+                <div class="field">
+                  <label for="hips-cm">Fianchi (cm)</label>
+                  <input id="hips-cm" name="hips" type="number" inputmode="decimal" min="20" max="250" step="0.1" />
+                </div>
+
+                <div class="field">
+                  <label for="chest-cm">Torace (cm)</label>
+                  <input id="chest-cm" name="chest" type="number" inputmode="decimal" min="20" max="250" step="0.1" />
+                </div>
+
+                <div class="field">
+                  <label for="arm-cm">Braccio (cm)</label>
+                  <input id="arm-cm" name="arm" type="number" inputmode="decimal" min="10" max="150" step="0.1" />
+                </div>
+
+                <div class="field">
+                  <label for="thigh-cm">Coscia (cm)</label>
+                  <input id="thigh-cm" name="thigh" type="number" inputmode="decimal" min="20" max="250" step="0.1" />
+                </div>
+
+                <div class="field">
+                  <label for="neck-cm">Collo (cm)</label>
+                  <input id="neck-cm" name="neck" type="number" inputmode="decimal" min="10" max="150" step="0.1" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="measurement-notes">Note (facoltative)</label>
+                <textarea
+                  id="measurement-notes"
+                  name="notes"
+                  maxlength="1000"
+                  rows="3"
+                  placeholder="Come ti senti, cosa vuoi ricordare di questa settimana…"
+                ></textarea>
+              </div>
+
+              <button id="measurement-submit" class="btn btn-primary btn-block" type="submit">
+                Salva misurazione
+              </button>
+            </form>
+          </section>
+
+          <section class="card section-tight" aria-labelledby="history-title">
+            <div class="card-heading">
+              <h2 id="history-title">Storico misurazioni</h2>
+              <span class="pill">Privato</span>
+            </div>
+
+            <div id="measurements-loading" class="inline-loading" role="status" hidden>
+              <span class="spinner spinner-small" aria-hidden="true"></span>
+              Aggiornamento dello storico…
+            </div>
+
+            <div id="measurements-message" class="alert" role="alert" aria-live="polite" hidden></div>
+
+            <div id="measurements-table-wrap" class="table-wrap">
+              <table class="data-table">
+                <caption class="visually-hidden">
+                  Storico delle misurazioni registrate, dalla più recente.
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Peso</th>
+                    <th scope="col">Vita</th>
+                    <th scope="col">Fianchi</th>
+                    <th scope="col">Torace</th>
+                    <th scope="col">Braccio</th>
+                    <th scope="col">Coscia</th>
+                    <th scope="col">Collo</th>
+                    <th scope="col">Note</th>
+                    <th scope="col"><span class="visually-hidden">Azioni</span></th>
+                  </tr>
+                </thead>
+                <tbody id="measurements-body"></tbody>
+              </table>
+            </div>
+
+            <p id="measurements-empty" class="empty-state" hidden>
+              Non hai ancora registrato misurazioni. Compila il modulo qui sopra per
+              iniziare a costruire il tuo storico.
+            </p>
+          </section>
+
+          <section class="card note-card" aria-labelledby="privacy-title">
+            <h2 id="privacy-title">Promemoria sulla privacy</h2>
+            <p>
+              Peso, altezza, circonferenze e note sono dati personali sensibili. In
+              questa versione sono visibili solo al tuo account e alla nutrizionista,
+              grazie alle policy di Row Level Security nel database. Non condividere la
+              tua password con nessuno.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>NutriTrack — progetto didattico realizzato con HTML, CSS, JavaScript e Supabase.</p>
+      </div>
+    </footer>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"
+    ></script>
+    <script defer src="js/config.js"></script>
+    <script defer src="js/main.js"></script>
+    <script defer src="js/dashboard.js"></script>
+  </body>
+</html>

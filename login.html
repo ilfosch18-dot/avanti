@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Accedi — NutriTrack</title>
+    <meta name="description" content="Accedi al tuo account NutriTrack." />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="NutriTrack, pagina iniziale">
+          <span class="brand-mark" aria-hidden="true">N</span>
+          Nutri<span class="brand-accent">Track</span>
+        </a>
+        <nav class="main-nav" aria-label="Navigazione principale">
+          <a class="nav-link" href="index.html">Home</a>
+          <div class="nav-actions">
+            <a class="btn btn-secondary btn-small" href="register.html">Crea account</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="auth-main">
+      <div class="container">
+        <div id="config-notice" class="alert alert-warning" role="status" hidden></div>
+      </div>
+
+      <div class="auth-shell container">
+        <section class="auth-aside" aria-labelledby="aside-title">
+          <p class="eyebrow">Bentornato</p>
+          <h2 id="aside-title">Il tuo percorso ti aspetta.</h2>
+          <p>
+            Accedi per aggiornare le tue misure, controllare l'andamento del peso e
+            vedere la data di inizio dieta impostata dalla nutrizionista.
+          </p>
+          <ul class="check-list">
+            <li>Dati privati per impostazione predefinita</li>
+            <li>Accesso sicuro con email e password</li>
+            <li>Le misure sono visibili solo a te e alla nutrizionista</li>
+          </ul>
+        </section>
+
+        <section class="auth-card" aria-labelledby="login-title">
+          <h1 id="login-title">Accedi</h1>
+          <p class="muted">Inserisci l'indirizzo email con cui ti sei registrato.</p>
+
+          <div id="form-message" class="alert" role="alert" aria-live="polite" hidden></div>
+
+          <form id="login-form" class="form" novalidate>
+            <div class="field">
+              <label for="email">Indirizzo email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="tu@example.com"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="La tua password"
+                required
+              />
+            </div>
+
+            <button id="login-submit" class="btn btn-primary btn-block" type="submit">
+              Accedi
+            </button>
+          </form>
+
+          <p class="form-footer">
+            Non hai un account? <a href="register.html">Registrati</a>
+          </p>
+          <p class="form-hint">
+            Il recupero della password non è ancora disponibile in questa versione.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>NutriTrack — progetto didattico realizzato con HTML, CSS, JavaScript e Supabase.</p>
+      </div>
+    </footer>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"
+    ></script>
+    <script defer src="js/config.js"></script>
+    <script defer src="js/main.js"></script>
+    <script defer src="js/auth.js"></script>
+  </body>
+</html>
